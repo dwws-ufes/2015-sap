@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/decorator.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{msgs['manageStudents.title.create']}" rendered="#{(! manageStudentsController.readOnly) and (manageStudentsController.selectedEntity.id == null)}" />
+        <h:outputText value="#{msgs['manageStudents.title.update']}" rendered="#{(! manageStudentsController.readOnly) and (manageStudentsController.selectedEntity.id != null)}" />
+        <h:outputText value="#{msgs['manageStudents.title.retrieve']}" rendered="#{manageStudentsController.readOnly}" />
+    </ui:define>
+
+    <ui:define name="contents">
+        <h1>
+            <h:outputText value="#{msgs['manageStudents.title.create']}" rendered="#{(! manageStudentsController.readOnly) and (manageStudentsController.selectedEntity.id == null)}" />
+            <h:outputText value="#{msgs['manageStudents.title.update']}" rendered="#{(! manageStudentsController.readOnly) and (manageStudentsController.selectedEntity.id != null)}" />
+            <h:outputText value="#{msgs['manageStudents.title.retrieve']}" rendered="#{manageStudentsController.readOnly}" />
+        </h1><br />
+
+        <div class="crud">
+            <ui:decorate template="/resources/form.xhtml">
+                <h:form id="form">
+                    <p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}" handler="findObjectById('form:name').focus();" />
+
+                    <h:panelGroup id="nameField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:name" />
+                            <ui:param name="tooltip" value="#{msgs['manageStudents.form.name.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageStudents.form.name']}" /></ui:define>
+                            <p:inputText 	id="name" value="#{manageStudentsController.selectedEntity.name}" size="50" 
+                            				required="true" disabled="#{manageStudentsController.readOnly}">
+                                <p:ajax event="blur" update="nameField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="enrollmentField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:enrollment" />
+                            <ui:param name="tooltip" value="#{msgs['manageStudents.form.enrollment.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageStudents.form.enrollment']}" /></ui:define>
+                            <p:inputMask 	id="enrollment" value="#{manageStudentsController.selectedEntity.enrollment}" mask="9999999999" 
+                            				size="9" required="true" disabled="#{manageStudentsController.readOnly}">
+                                <p:ajax event="blur" update="enrollmentField" />
+                            </p:inputMask>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="emailField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:email" />
+                            <ui:param name="tooltip" value="#{msgs['manageStudents.form.email.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageStudents.form.email']}" /></ui:define>
+                            <p:inputText 	id="email" value="#{manageStudentsController.selectedEntity.email}" size="50" 
+                            				required="true" disabled="#{manageStudentsController.readOnly}">
+                                <p:ajax event="blur" update="emailField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="phoneField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:phone" />
+                            <ui:param name="tooltip" value="#{msgs['manageStudents.form.phone.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageStudents.form.phone']}" /></ui:define>
+                            <p:inputMask 	id="phone" value="#{manageStudentsController.selectedEntity.phone}" size="12" 
+                            				mask="(99) 9-9999-9999" required="true" disabled="#{manageStudentsController.readOnly}">
+                                <p:ajax event="blur" update="phoneField" />
+                            </p:inputMask>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+
+                    <ui:decorate template="/resources/formbutton.xhtml">
+                        <h:panelGroup rendered="#{! manageStudentsController.readOnly}">
+                            <p:commandButton action="#{manageStudentsController.list}" value="#{msgs['crud.button.cancel']}" immediate="true" icon="buttonCancel" />
+                            <p:commandButton action="#{manageStudentsController.save}" value="#{msgs['crud.button.save']}" icon="buttonOk" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageStudentsController.list}" immediate="true" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.save']}" action="#{manageStudentsController.save}" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{manageStudentsController.readOnly}">
+                            <p:commandButton action="#{manageStudentsController.list}" value="#{msgs['crud.button.back']}" immediate="true" icon="buttonBack" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageStudentsController.list}" immediate="true" />
+                        </h:panelGroup>
+                    </ui:decorate>
+                </h:form>
+            </ui:decorate>
+        </div>
+    </ui:define>
+
+    <ui:define name="help">
+        <h4><h:outputText value="#{msgs['text.hotkeys']}" />:</h4>
+        <ul>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+        </ul>
+    </ui:define>
+</ui:composition>

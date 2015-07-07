@@ -1,0 +1,123 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/decorator.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{msgs['manageAssignments.title.create']}" rendered="#{(! manageAssignmentsController.readOnly) and (manageAssignmentsController.selectedEntity.id == null)}" />
+        <h:outputText value="#{msgs['manageAssignments.title.update']}" rendered="#{(! manageAssignmentsController.readOnly) and (manageAssignmentsController.selectedEntity.id != null)}" />
+        <h:outputText value="#{msgs['manageAssignments.title.retrieve']}" rendered="#{manageAssignmentsController.readOnly}" />
+    </ui:define>
+    
+    <ui:define name="contents">
+        <h1>
+            <h:outputText value="#{msgs['manageAssignments.title.create']}" rendered="#{(! manageAssignmentsController.readOnly) and (manageAssignmentsController.selectedEntity.id == null)}" />
+            <h:outputText value="#{msgs['manageAssignments.title.update']}" rendered="#{(! manageAssignmentsController.readOnly) and (manageAssignmentsController.selectedEntity.id != null)}" />
+            <h:outputText value="#{msgs['manageAssignments.title.retrieve']}" rendered="#{manageAssignmentsController.readOnly}" />
+        </h1><br />
+
+        <div class="crud">
+            <ui:decorate template="/resources/form.xhtml">
+                <h:form id="form">
+                    <p:hotkey bind="#{msgs['crud.hotkey.focusFirstField']}" handler="findObjectById('form:name').focus();" />
+
+                    
+					<h:panelGroup id="subjectField">
+	                    <ui:decorate template="/resources/formfield.xhtml">
+	                        <ui:param name="fieldName" value="form:subject" />
+	                        <ui:param name="tooltip" value="#{msgs['manageAssignments.form.subject.tooltip']}" />
+	                        <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.subject']}" /></ui:define>
+	                        <p:inputText id="subject" value="#{manageAssignmentsController.selectedEntity.subject}" size="50" required="true" disabled="#{manageAssignmentsController.readOnly}">
+	                            <p:ajax event="blur" update="subjectField" />
+	                        </p:inputText>
+	                    </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="valueField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:value" />
+                            <ui:param name="tooltip" value="#{msgs['manageAssignments.form.value.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.value']}" /></ui:define>
+                            <p:inputText id="value" value="#{manageAssignmentsController.selectedEntity.value}" mask="9?99" size="3" required="true" disabled="#{manageAssignmentsController.readOnly}">
+                                <p:ajax event="blur" update="valueField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="deliveryDateField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:deliveryDate" />
+                            <ui:param name="tooltip" value="#{msgs['manageAssignments.form.deliveryDate.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.deliveryDate']}" /></ui:define>
+                            <p:calendar 	id="deliveryDate" value="#{manageAssignmentsController.selectedEntity.deliveryDate}" size="8" mask="true"
+                            				pattern="dd/MM/yyyy" required="true" disabled="#{manageAssignmentsController.readOnly}">
+                                <p:ajax event="blur" />
+                            </p:calendar>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="descriptionField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:description" />
+                            <ui:param name="tooltip" value="#{msgs['manageAssignments.form.description.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.description']}" /></ui:define>
+                            <p:inputText 	id="description" value="#{manageAssignmentsController.selectedEntity.description}" 
+                            				size="50" required="true" disabled="#{manageAssignmentsController.readOnly}">
+                                <p:ajax event="blur" update="descriptionField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="numMaxParticipantsField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:numMaxParticipants" />
+                            <ui:param name="tooltip" value="#{msgs['manageAssignments.form.numMaxParticipants.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.numMaxParticipants']}" /></ui:define>
+                            <p:inputMask 	id="numMaxParticipants" value="#{manageAssignmentsController.selectedEntity.numMaxParticipants}" 
+                            				mask="9?99" size="3" required="true" disabled="#{manageAssignmentsController.readOnly}">
+                                <p:ajax event="blur" update="numMaxParticipantsField" />
+                            </p:inputMask>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <h:panelGroup id="valueDiscountDelayField">
+                        <ui:decorate template="/resources/formfield.xhtml">
+                            <ui:param name="fieldName" value="form:valueDiscountDelay" />
+                            <ui:param name="tooltip" value="#{msgs['manageAssignments.form.valueDiscountDelay.tooltip']}" />
+                            <ui:define name="label"><h:outputText value="#{msgs['manageAssignments.form.valueDiscountDelay']}" /></ui:define>
+                            <p:inputText 	id="valueDiscountDelay" value="#{manageAssignmentsController.selectedEntity.valueDiscountDelay}" 
+                            				mask="9?99" size="4" required="true" disabled="#{manageAssignmentsController.readOnly}">
+                                <p:ajax event="blur" update="valueDiscountDelayField" />
+                            </p:inputText>
+                        </ui:decorate>
+                    </h:panelGroup><br />                    
+                    
+                    <ui:decorate template="/resources/formbutton.xhtml">
+                        <h:panelGroup rendered="#{! manageAssignmentsController.readOnly}">
+                            <p:commandButton action="#{manageAssignmentsController.list}" value="#{msgs['crud.button.cancel']}" immediate="true" icon="buttonCancel" />
+                            <p:commandButton action="#{manageAssignmentsController.save}" value="#{msgs['crud.button.save']}" icon="buttonOk" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageAssignmentsController.list}" immediate="true" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.save']}" action="#{manageAssignmentsController.save}" />
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{manageAssignmentsController.readOnly}">
+                            <p:commandButton action="#{manageAssignmentsController.list}" value="#{msgs['crud.button.back']}" immediate="true" icon="buttonBack" />
+                            <p:hotkey bind="#{msgs['crud.hotkey.backToList']}" action="#{manageAssignmentsController.list}" immediate="true" />
+                        </h:panelGroup>
+                    </ui:decorate>
+                </h:form>
+            </ui:decorate>
+        </div>
+    </ui:define>
+
+    <ui:define name="help">
+        <h4><h:outputText value="#{msgs['text.hotkeys']}" />:</h4>
+        <ul>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.focusFirstField']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.focusFirstField']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.backToList']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.backToList']}" />;</li>
+            <li><b><h:outputText value="#{msgs['crud.hotkey.save']}" /></b>: <h:outputText value="#{msgs['crud.help.hotkeys.save']}" />.</li>
+        </ul>
+    </ui:define>
+</ui:composition>
