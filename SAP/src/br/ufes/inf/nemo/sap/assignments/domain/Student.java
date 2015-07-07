@@ -8,13 +8,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the students.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Student 	extends PersistentObjectSupport 
-						implements Comparable<Student> {
+public class Student extends PersistentObjectSupport implements Comparable<Student> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -23,20 +21,22 @@ public class Student 	extends PersistentObjectSupport
 	@NotNull
 	private String name;
 	
-	/** Email of the student. */
-	@Basic
-	@NotNull
-	private String email;
-	
-	/** Phone of the student. */
-	@Basic
-	@NotNull
-	private String phone;
-
 	@Basic
 	@NotNull
 	private String enrollment;
 	
+	/** Email of the student. */
+	@Basic
+	private String email;
+	
+	/** Phone of the student. */
+	@Basic
+	private String phone;
+
+	/** Password to access the system. */
+	@Basic
+	private String password;
+			
 	/** Getter for name. */
 	public String getName() {
 		return name;
@@ -45,6 +45,16 @@ public class Student 	extends PersistentObjectSupport
 	/** Setter for name. */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/** Getter for enrollment. */
+	public String getEnrollment() {
+		return enrollment;
+	}
+
+	/** Getter for enrollment. */
+	public void setEnrollment(String enrollment) {
+		this.enrollment = enrollment;
 	}
 
 	/** Getter for email. */
@@ -67,18 +77,36 @@ public class Student 	extends PersistentObjectSupport
 		this.phone = phone;
 	}
 
-	public String getEnrollment() {
-		return enrollment;
+	/** Getter for password. */
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEnrollment(String enrollment) {
-		this.enrollment = enrollment;
+	/** Setter for password. */
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
+		
+	/** Representation of class in text form. */
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(Student o) {
-		// TODO Auto-generated method stub
-		return 0;
+		/** name */
+		int cmp = name.compareTo(o.name);
+		if (cmp != 0)
+			return cmp;
+		
+		/** enrollment */
+		cmp = enrollment.compareTo(o.enrollment);
+		if (cmp != 0)
+			return cmp;
+
+		/** If it's the same name and enrollment, check if it's the same entity. */
+		return uuid.compareTo(o.uuid);
 	}
 }

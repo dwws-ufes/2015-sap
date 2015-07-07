@@ -10,13 +10,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the disciplines.
  * 
- * @author Luiz Vitor França Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Discipline 	extends PersistentObjectSupport 
-							implements Comparable<Discipline> {
+public class Discipline extends PersistentObjectSupport implements Comparable<Discipline> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +29,7 @@ public class Discipline 	extends PersistentObjectSupport
 	private String code;
 	
 	/** Schoolrooms related to the discipline. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "discipline")
+	@OneToMany(mappedBy = "discipline")
 	private Set<SchoolRoom> schoolRooms;
 
 	/** Getter for name. */
@@ -71,8 +69,7 @@ public class Discipline 	extends PersistentObjectSupport
 	
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
-	public int compareTo(Discipline o) {
-		// TODO Auto-generated method stub
+	public int compareTo(Discipline o) {		
 		return 0;
 	}
 }

@@ -7,18 +7,21 @@ import javax.validation.constraints.NotNull;
 
 import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 
-/**
+ /**
  * Domain class that represent the assignments.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Assignment 	extends PersistentObjectSupport  
-							implements Comparable<Assignment> {
+public class Assignment extends PersistentObjectSupport implements Comparable<Assignment> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Number of the group. */
+	@Basic
+	@NotNull
+	private String number;
 	
 	/** Subject of the assignment. */
 	@Basic
@@ -34,12 +37,7 @@ public class Assignment 	extends PersistentObjectSupport
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	private Date deliveryDate;
-	
-	/** Description detail of the assignment. */
-	@Basic
-	@NotNull
-	private String description;
-	
+		
 	/** Number max of participants by group of the assignment. */
 	@Basic
 	@NotNull
@@ -47,17 +45,27 @@ public class Assignment 	extends PersistentObjectSupport
 	
 	/** Discount value by day of delay in the assignment submission. */
 	@Basic
-	@NotNull
 	private Float valueDiscountDelay;
 	
-	/** Groups related to the assignment. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignment")
+	/** Groups related to the assignment. */	
+	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignment", fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER)
 	private Set<AssignmentGroup> assignmentGroups;
 	
 	/** SchoolRoom associated with the Assignment. */
 	@ManyToOne
 	private SchoolRoom schoolRoom;
 
+	/** Getter for number. */
+	public String getNumber() {
+		return number;
+	}
+
+	/** Setter for number. */
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
 	/** Getter for subject. */
 	public String getSubject() {
 		return subject;
@@ -86,16 +94,6 @@ public class Assignment 	extends PersistentObjectSupport
 	/** Setter for deliveryDate. */
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
-	}
-
-	/** Getter for description. */
-	public String getDescription() {
-		return description;
-	}
-
-	/** Setter for description. */
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	/** Getter for numMaxParticipants. */
@@ -148,7 +146,6 @@ public class Assignment 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(Assignment o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

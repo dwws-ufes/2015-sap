@@ -10,13 +10,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the deliveredAssignments.
  * 
- * @author Luiz Vitor França Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class DeliveredAssignment 	extends PersistentObjectSupport 
-									implements Comparable<DeliveredAssignment> {
+public class DeliveredAssignment extends PersistentObjectSupport implements Comparable<DeliveredAssignment> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -82,7 +80,6 @@ public class DeliveredAssignment 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(DeliveredAssignment o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

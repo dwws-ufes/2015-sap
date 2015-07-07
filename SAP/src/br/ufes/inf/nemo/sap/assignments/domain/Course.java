@@ -10,13 +10,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the courses.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Course 	extends PersistentObjectSupport 
-						implements Comparable<Course> {
+public class Course extends PersistentObjectSupport implements Comparable<Course> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +29,7 @@ public class Course 	extends PersistentObjectSupport
 	private String code;
 	
 	/** Schoolrooms related to the course. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+	@OneToMany(mappedBy = "course")
 	private Set<SchoolRoom> schoolRooms;
 
 	/** Getter for name. */
@@ -73,7 +71,6 @@ public class Course 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */	
 	@Override
 	public int compareTo(Course o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

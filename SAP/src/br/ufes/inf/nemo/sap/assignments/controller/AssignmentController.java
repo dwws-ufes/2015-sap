@@ -9,15 +9,15 @@ import javax.inject.Named;
 
 import br.ufes.inf.nemo.sap.assignments.domain.*;
 import br.ufes.inf.nemo.sap.assignments.persistence.*;
+import br.ufes.inf.nemo.sap.lab.domain.ResearchGroup;
+import br.ufes.inf.nemo.sap.lab.domain.persistence.ResearchGroupDAO;
 import br.ufes.inf.nemo.util.ejb3.controller.PersistentObjectConverterFromId;
-
 
 /**
  * Application-scoped bean that centralizes controller information for the assignment package. This bean differs from the
- * singleton EJB CoreInformation by containing data relative to the presentation layer (controller and view, i.e., the
- * web).
+ * singleton EJB Assignment by containing data relative to the presentation layer (controller and view, i.e., the web).
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
 @Named
@@ -46,9 +46,17 @@ public class AssignmentController implements Serializable {
 	@EJB
 	private ProfessorDAO professorDAO;
 	
+	/** The DAO for Student objects. */
+	@EJB
+	private StudentDAO studentDAO;
+	
 	/** The DAO for Assignment objects. */
 	@EJB
 	private AssignmentDAO assignmentDAO;
+	
+	/** The DAO for ResearchGroup objects. */
+	@EJB
+	private ResearchGroupDAO researchGroupDAO;
 	
 	/** JSF Converter for Course objects. */
 	private PersistentObjectConverterFromId<Course> courseConverter;
@@ -62,49 +70,59 @@ public class AssignmentController implements Serializable {
 	/** JSF Converter for Professor objects. */
 	private PersistentObjectConverterFromId<Professor> professorConverter;
 	
+	/** JSF Converter for Student objects. */
+	private PersistentObjectConverterFromId<Student> studentConverter;
+	
 	/** JSF Converter for SchoolRoom objects. */
 	private PersistentObjectConverterFromId<SchoolRoom> schoolRoomConverter;
 	
 	/** JSF Converter for Assignment objects. */
-	private PersistentObjectConverterFromId<Assignment> assignmentConverter;	
+	private PersistentObjectConverterFromId<Assignment> assignmentConverter;
 	
-	/** Getter for professorConverter. */
+	/** JSF Converter for ResearchGroup objects. */
+	private PersistentObjectConverterFromId<ResearchGroup> researchGroupConverter;
+	
+	/** Getter for professor converter. */
 	public Converter getProfessorConverter() {
-		// Lazily create the converter.
 		if (professorConverter == null) {
 			professorConverter = new PersistentObjectConverterFromId<Professor>(professorDAO);
 		}
 		return professorConverter;
 	}
 	
-	/** Getter for periodConverter. */
+	/** Getter for student converter. */
+	public Converter getStudentConverter() {
+		if (studentConverter == null) {
+			studentConverter = new PersistentObjectConverterFromId<Student>(studentDAO);
+		}
+		return studentConverter;
+	}
+	
+	/** Getter for period converter. */
 	public Converter getPeriodConverter() {
-		// Lazily create the converter.
 		if (periodConverter == null) {
 			periodConverter = new PersistentObjectConverterFromId<Period>(periodDAO);
 		}
 		return periodConverter;
 	}	
 	
-	/** Getter for disciplineConverter. */
+	/** Getter for discipline converter. */
 	public Converter getDisciplineConverter() {
-		// Lazily create the converter.
 		if (disciplineConverter == null) {
 			disciplineConverter = new PersistentObjectConverterFromId<Discipline>(disciplineDAO);
 		}
 		return disciplineConverter;
 	}	
 	
-	/** Getter for courseConverter. */
+	/** Getter for course converter. */
 	public Converter getCourseConverter() {
-		// Lazily create the converter.
 		if (courseConverter == null) {
 			courseConverter = new PersistentObjectConverterFromId<Course>(courseDAO);
 		}
 		return courseConverter;
 	}
 	
-	/** Getter for schoolRoomConverter. */
+	/** Getter for schoolRoom converter. */
 	public Converter getSchoolRoomConverter() {
 		if (schoolRoomConverter == null) {
 			schoolRoomConverter = new PersistentObjectConverterFromId<SchoolRoom>(schoolRoomDAO);
@@ -112,11 +130,19 @@ public class AssignmentController implements Serializable {
 		return schoolRoomConverter;
 	}
 	
-	/** Getter for AssignmentConverter. */
+	/** Getter for Assignment converter. */
 	public Converter getAssignmentConverter() {
 		if (assignmentConverter == null) {
 			assignmentConverter = new PersistentObjectConverterFromId<Assignment>(assignmentDAO);
 		}
 		return assignmentConverter;
+	}
+	
+	/** Getter for ResearchGroup converter. */
+	public Converter getResearchGroupConverter() {
+		if (researchGroupConverter == null) {
+			researchGroupConverter = new PersistentObjectConverterFromId<ResearchGroup>(researchGroupDAO);
+		}
+		return researchGroupConverter;
 	}
 }

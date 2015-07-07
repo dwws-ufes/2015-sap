@@ -9,16 +9,15 @@ import br.ufes.inf.nemo.util.ejb3.persistence.BaseJPADAO;
 /**
  * Stateless session bean implementing a DAO for objects of the DeliveredAssignment domain class using JPA2.
  * 
- * Using a mini CRUD framework for EJB3, basic DAO operation implementations are inherited from the superclass, whereas
- * operations that are specific to the managed domain class (if any is defined in the implementing DAO interface) have
- * to be implemented in this class.
+ * Using a mini CRUD framework for EJB3, basic DAO operation implementations are inherited from the superclass, 
+ * whereas operations that are specific to the managed domain class (if any is defined in the implementing DAO interface) 
+ * have to be implemented in this class.
  * 
- * @author Luiz Vitor França Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
 @Stateless
-public class DeliveredAssignmentJPADAO 	extends BaseJPADAO<DeliveredAssignment> 
-										implements DeliveredAssignmentDAO {
+public class DeliveredAssignmentJPADAO extends BaseJPADAO<DeliveredAssignment> implements DeliveredAssignmentDAO {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -26,15 +25,15 @@ public class DeliveredAssignmentJPADAO 	extends BaseJPADAO<DeliveredAssignment>
 	@PersistenceContext 
 	private EntityManager entityManager;
 
+	/** Getter Domain Class. */
 	@Override
 	public Class<DeliveredAssignment> getDomainClass() {
-		// TODO Auto-generated method stub
 		return DeliveredAssignment.class;
 	}
 
+	/** Getter EntityManager. */
 	@Override
 	protected EntityManager getEntityManager() {
-		// TODO Auto-generated method stub
 		return entityManager;
 	}
 }

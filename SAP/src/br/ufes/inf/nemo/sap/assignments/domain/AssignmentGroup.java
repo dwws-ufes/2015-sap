@@ -10,13 +10,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the AssignmentGroups.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class AssignmentGroup 	extends PersistentObjectSupport  
-								implements Comparable<AssignmentGroup> {
+public class AssignmentGroup extends PersistentObjectSupport implements Comparable<AssignmentGroup> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -29,9 +27,13 @@ public class AssignmentGroup 	extends PersistentObjectSupport
 	@ManyToOne
 	private Assignment assignment;
 	
+	/** Students of the assignmentGroup. */
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Student> students;
+	
 	/** Delivered assignments related to the assignment Group. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignmentGroup")
-	private Set<DeliveredAssignment> deliveredAssignment;
+	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignmentGroup")
+	//private Set<DeliveredAssignment> deliveredAssignment;
 
 	/** Getter for number. */
 	public String getNumber() {
@@ -47,26 +49,35 @@ public class AssignmentGroup 	extends PersistentObjectSupport
 	public Assignment getAssignment() {
 		return assignment;
 	}
-
+	
 	/** Setter for assignment. */
 	public void setAssignment(Assignment assignment) {
 		this.assignment = assignment;
 	}
-	
-	/** Getter for deliveredAssignment. */
-	public Set<DeliveredAssignment> getDeliveredAssignment() {
-		return deliveredAssignment;
+
+	/** Getter for students. */
+	public Set<Student> getStudents() {
+		return students;
 	}
 
-	/** Setter for deliveredAssignment. */
-	public void setDeliveredAssignment(Set<DeliveredAssignment> deliveredAssignment) {
-		this.deliveredAssignment = deliveredAssignment;
+	/** Setter for students. */
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
+
+	/** Getter for deliveredAssignment. */
+	//public Set<DeliveredAssignment> getDeliveredAssignment() {
+	//	return deliveredAssignment;
+	//}
+
+	/** Setter for deliveredAssignment. */
+	//public void setDeliveredAssignment(Set<DeliveredAssignment> deliveredAssignment) {
+	//	this.deliveredAssignment = deliveredAssignment;
+	//}
 
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(AssignmentGroup o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

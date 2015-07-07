@@ -11,20 +11,18 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the periods.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Period 	extends PersistentObjectSupport 
-						implements Comparable<Period> {
+public class Period extends PersistentObjectSupport implements Comparable<Period> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
 	/** Year of the period. */
 	@Basic
 	@NotNull
-	private Integer year;
+	private String year;
 	
 	/** Number of the period. */
 	@Basic
@@ -46,12 +44,12 @@ public class Period 	extends PersistentObjectSupport
 	private Set<SchoolRoom> schoolRooms;
 	
 	/** Getter for year. */
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 	
 	/** Setter for year. */
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	
@@ -104,7 +102,6 @@ public class Period 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(Period o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

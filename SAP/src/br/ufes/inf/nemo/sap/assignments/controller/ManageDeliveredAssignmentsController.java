@@ -15,7 +15,7 @@ import br.ufes.inf.nemo.util.ejb3.controller.CrudController;
  * 
  * This use case is a CRUD and, thus, the controller also uses the mini CRUD framework for EJB3.
  * 
- * @author Luiz Vitor França Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
 @Named
@@ -24,29 +24,42 @@ public class ManageDeliveredAssignmentsController extends CrudController<Deliver
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The "Manage Delivered Assignments" service. */
 	@EJB
 	private ManageDeliveredAssignmentsService manageDeliveredAssignmentsService;
 
+	/** Getter class service. */
+	@Override
+	protected CrudService<DeliveredAssignment> getCrudService() {
+		return manageDeliveredAssignmentsService;
+	}
 	
+	/** Class constructor. */
 	public ManageDeliveredAssignmentsController() {
 	    viewPath = "/assignments/manageDeliveredAssignments/";
 	    bundleName = "msgs";
 	}
 	
+	// VERIFICAR DEPOIS COMO FAZ O UPLOAD DE ARQUIVOS
+	//private UploadedFile file;
+	 
+    //public UploadedFile getFile() {
+    //    return file;
+    //}
+ 
+    //public void setFile(UploadedFile file) {
+    //    this.file = file;
+    //}
+	
+	/** Creates a new entity DeliveredAssignment. */
 	@Override
 	protected DeliveredAssignment createNewEntity() {
-		// TODO Auto-generated method stub
 		return new DeliveredAssignment();
 	}
 
-	@Override
-	protected CrudService<DeliveredAssignment> getCrudService() {
-		// TODO Auto-generated method stub
-		return manageDeliveredAssignmentsService;
-	}
-
+	/** Filters used in the class. */
 	@Override
 	protected void initFilters() {
-		// TODO Auto-generated method stub
+		
 	}
 }

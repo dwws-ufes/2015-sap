@@ -10,13 +10,11 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the schoolRooms.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class SchoolRoom 	extends PersistentObjectSupport 
-							implements Comparable<SchoolRoom> {
+public class SchoolRoom extends PersistentObjectSupport implements Comparable<SchoolRoom> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
 	
@@ -42,7 +40,7 @@ public class SchoolRoom 	extends PersistentObjectSupport
 	private Course course;
 	
 	/** Assignment related to the schoolroom. */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "schoolRoom")
+	@OneToMany(mappedBy = "schoolRoom")
 	private Set<Assignment> assignments;
 
 	/** Getter for number. */
@@ -84,7 +82,7 @@ public class SchoolRoom 	extends PersistentObjectSupport
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-
+	
 	/** Getter for course. */
 	public Course getCourse() {
 		return course;
@@ -93,6 +91,20 @@ public class SchoolRoom 	extends PersistentObjectSupport
 	/** Setter for course. */
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+	
+	/** Students of the schoolRoom. */	
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Student> students;
+	
+	/** Getter for students. */
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	/** Setter for students. */
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 	
 	/** Representation of class in text form. */
@@ -104,7 +116,6 @@ public class SchoolRoom 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */
 	@Override
 	public int compareTo(SchoolRoom o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

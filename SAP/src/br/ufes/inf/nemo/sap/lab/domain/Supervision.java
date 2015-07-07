@@ -11,25 +11,27 @@ import br.ufes.inf.nemo.util.ejb3.persistence.PersistentObjectSupport;
 /**
  * Domain class that represent the Supervision.
  * 
- * @author Luiz Vitor Fran�a Lima / Worlen Augusto Gomes
+ * @author Luiz Vitor Franca Lima / Worlen Augusto Gomes
  */
 
-/** Persist the class in the database. */
 @Entity
-public class Supervision 	extends PersistentObjectSupport 
-							implements Comparable<Supervision> {
+public class Supervision extends PersistentObjectSupport implements Comparable<Supervision> {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Student of the supervision. */
+	@OneToOne
+	private Student student;
 	
 	/** Theme of the supervision. */
 	@Basic
 	@NotNull
 	private String theme;
-	
+		
 	/** Type of the supervision. */
 	@Basic
 	@NotNull
-	private Integer type;
+	private SupervisionTypeEnum type;
 	
 	/** Starting date of the supervision. */
 	@Temporal(TemporalType.DATE)
@@ -41,17 +43,23 @@ public class Supervision 	extends PersistentObjectSupport
 	@NotNull
 	private Date endDate;
 	
-	/** Enrollment associated with the supervision. */
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Enrollment enrollment;
-	
 	/** Advisor associated with the supervision. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Professor advisor;
 	
 	/** Coadvisor associated with the supervision. */
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Professor coadvisor;
+	
+	/** Getter for student. */
+	public Student getStudent() {
+		return student;
+	}
+
+	/** Setter for student. */
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 	
 	/** Getter for theme. */
 	public String getTheme() {
@@ -64,12 +72,12 @@ public class Supervision 	extends PersistentObjectSupport
 	}
 
 	/** Getter for type. */
-	public Integer getType() {
+	public SupervisionTypeEnum getType() {
 		return type;
 	}
 
 	/** Setter for type. */
-	public void setType(Integer type) {
+	public void setType(SupervisionTypeEnum type) {
 		this.type = type;
 	}
 	
@@ -91,16 +99,6 @@ public class Supervision 	extends PersistentObjectSupport
 	/** Setter for endDate. */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
-
-	/** Getter for enrollment. */
-	public Enrollment getEnrollment() {
-		return enrollment;
-	}
-
-	/** Setter for enrollment. */
-	public void setEnrollment(Enrollment enrollment) {
-		this.enrollment = enrollment;
 	}
 
 	/** Getter for advisor. */
@@ -126,7 +124,6 @@ public class Supervision 	extends PersistentObjectSupport
 	/** The nemo-utils mini CRUD framework requires that classes managed by it be comparable for sorting. */	
 	@Override
 	public int compareTo(Supervision o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }
